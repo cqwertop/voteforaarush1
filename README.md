@@ -1,6 +1,6 @@
-# Ruiz '26 — Campaign Site
+# Anumukonda '26 — Campaign Site
 
-A bold, animated one-page campaign site built with Astro.
+A bold, animated one-page campaign site built with Astro for Aarush Anumukonda.
 
 ## Running it locally
 
