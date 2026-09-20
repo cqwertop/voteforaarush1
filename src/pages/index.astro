@@ -36,6 +36,15 @@ const timeline = [
   { date: "Day 3", event: "Debate night vs. other tickets" },
   { date: "Day 4", event: "Voting opens" },
 ];
+
+// Poll options — Aarush is the only one that doesn't run from the cursor.
+const candidates = [
+  { name: "Aarush Anumukonda", correct: true },
+  { name: "A Write-In Squirrel", correct: false },
+  { name: "The Vending Machine", correct: false },
+  { name: "Someone's Cousin", correct: false },
+  { name: "Undecided", correct: false },
+];
 ---
 
 <!doctype html>
@@ -60,6 +69,7 @@ const timeline = [
         <a href="#platform">Platform</a>
         <a href="#numbers">Numbers</a>
         <a href="#timeline">Timeline</a>
+        <a href="#poll">Poll</a>
         <a href="#vote" class="nav-cta">Vote Aarush</a>
       </nav>
     </div>
@@ -79,7 +89,7 @@ const timeline = [
           </h1>
           <p class="hero-sub">
             
-            Here's what four hundred conversations turned into.
+            Here's what four conversations turned into.
           </p>
           <div class="hero-actions">
             <a href="#vote" class="btn-magnetic">
@@ -156,6 +166,25 @@ const timeline = [
           </div>
         ))}
       </div>
+    </section>
+
+    <section id="poll" class="poll">
+      <div class="section-head">
+        <h2>Cast your vote</h2>
+        <p>Pick a candidate. (Fair warning: not everyone on this ballot wants to be picked.)</p>
+      </div>
+      <div class="poll-wrap" id="pollWrap">
+        {candidates.map((c, i) => (
+          <button
+            class="poll-opt"
+            data-correct={c.correct ? "true" : "false"}
+            style={`--i:${i}`}
+          >
+            {c.name}
+          </button>
+        ))}
+      </div>
+      <p class="poll-msg" id="pollMsg">&nbsp;</p>
     </section>
 
     <section id="vote" class="cta-section">
@@ -546,6 +575,71 @@ const timeline = [
       color:#2a2822;
     }
 
+    /* Poll */
+    .poll{
+      padding:120px 5vw;
+      max-width:900px;
+      margin:0 auto;
+    }
+    .poll-wrap{
+      position:relative;
+      height:340px;
+      max-width:640px;
+      margin:0 auto;
+    }
+    .poll-opt{
+      position:absolute;
+      font-family:var(--font-body);
+      font-weight:600;
+      font-size:15px;
+      color:var(--ink);
+      background:#fff;
+      border:1.5px solid var(--ink);
+      border-radius:100px;
+      padding:14px 24px;
+      cursor:pointer;
+      transition:transform .18s cubic-bezier(.34,1.56,.64,1), box-shadow .18s ease, background .18s ease, left .18s cubic-bezier(.34,1.56,.64,1), top .18s cubic-bezier(.34,1.56,.64,1);
+      box-shadow:4px 4px 0 rgba(20,19,26,0.1);
+    }
+    .poll-opt[data-correct="true"]{
+      border-color:var(--coral);
+      color:var(--coral);
+    }
+    .poll-opt[data-correct="true"]:hover{
+      background:var(--coral);
+      color:var(--paper);
+      transform:scale(1.04);
+      box-shadow:6px 6px 0 var(--gold);
+    }
+    .poll-opt[data-correct="false"]:hover{
+      box-shadow:6px 6px 0 rgba(20,19,26,0.15);
+    }
+    .poll-opt.voted{
+      background:var(--coral);
+      color:var(--paper);
+      border-color:var(--coral);
+    }
+    .poll-msg{
+      text-align:center;
+      margin-top:28px;
+      font-size:15px;
+      font-weight:500;
+      color:#4a4842;
+      min-height:22px;
+    }
+    .poll-msg.win{
+      color:var(--coral);
+      font-family:var(--font-display);
+      font-weight:700;
+    }
+
+    /* Poll option starting positions — spread across the wrap */
+    .poll-opt[style*="--i:0"]{ top:8px;    left:16%; }
+    .poll-opt[style*="--i:1"]{ top:8px;    left:60%; }
+    .poll-opt[style*="--i:2"]{ top:120px;  left:2%; }
+    .poll-opt[style*="--i:3"]{ top:130px;  left:52%; }
+    .poll-opt[style*="--i:4"]{ top:250px;  left:24%; }
+
     /* CTA */
     .cta-section{
       padding:160px 5vw;
@@ -582,6 +676,8 @@ const timeline = [
       .stat-grid{grid-template-columns:repeat(2, 1fr); gap:32px;}
       .platform-item{grid-template-columns:1fr; gap:10px;}
       .timeline-item{grid-template-columns:12px 80px 1fr; gap:14px;}
+      .poll-wrap{height:420px;}
+      .poll-opt{font-size:13px; padding:11px 18px;}
     }
 
     @media (prefers-reduced-motion: reduce){
@@ -592,6 +688,7 @@ const timeline = [
         transform:none !important;
         transition:none !important;
       }
+      .poll-opt{transition:background .18s ease, box-shadow .18s ease !important;}
     }
   </style>
 
@@ -661,6 +758,65 @@ const timeline = [
         btn.style.transform = 'translate(0,0)';
       });
     });
+
+    // Evasive poll — every option except the correct one dodges the cursor.
+    // Falls back to a normal, non-evasive click target for touch/keyboard users
+    // (mouseenter never fires on tap, and focus-based nav shouldn't relocate
+    // buttons it hasn't visually approached with a pointer).
+    const pollWrap = document.getElementById('pollWrap') as HTMLElement | null;
+    const pollMsg = document.getElementById('pollMsg') as HTMLElement | null;
+    const isCoarsePointer = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+
+    if (pollWrap && pollMsg) {
+      const opts = pollWrap.querySelectorAll<HTMLButtonElement>('.poll-opt');
+
+      opts.forEach((btn) => {
+        if (!isCoarsePointer) {
+          btn.addEventListener('mouseenter', (e: MouseEvent) => {
+            if (btn.dataset.correct === 'true') return;
+
+            const wrapRect = pollWrap.getBoundingClientRect();
+            const rect = btn.getBoundingClientRect();
+            const bw = rect.width;
+            const bh = rect.height;
+            const curLeft = rect.left - wrapRect.left;
+            const curTop = rect.top - wrapRect.top;
+
+            const mouseX = e.clientX - wrapRect.left;
+            const mouseY = e.clientY - wrapRect.top;
+            const cx = curLeft + bw / 2;
+            const cy = curTop + bh / 2;
+
+            const dx = cx - mouseX;
+            const dy = cy - mouseY;
+            const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+            const jump = 100;
+
+            let nx = curLeft + (dx / dist) * jump + (Math.random() - 0.5) * 50;
+            let ny = curTop + (dy / dist) * jump + (Math.random() - 0.5) * 50;
+
+            nx = Math.max(4, Math.min(pollWrap.clientWidth - bw - 4, nx));
+            ny = Math.max(4, Math.min(pollWrap.clientHeight - bh - 4, ny));
+
+            btn.style.left = `${nx}px`;
+            btn.style.top = `${ny}px`;
+            pollMsg.textContent = 'Not quite — try again.';
+            pollMsg.classList.remove('win');
+          });
+        }
+
+        btn.addEventListener('click', () => {
+          if (btn.dataset.correct === 'true') {
+            btn.classList.add('voted');
+            pollMsg.textContent = 'Vote cast for Aarush. Smart pick.';
+            pollMsg.classList.add('win');
+          } else if (isCoarsePointer) {
+            pollMsg.textContent = 'Not quite — try again.';
+            pollMsg.classList.remove('win');
+          }
+        });
+      });
+    }
   </script>
 
 </body>
