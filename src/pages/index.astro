@@ -1,0 +1,665 @@
+---
+// src/pages/index.astro
+const platform = [
+  {
+    n: "01",
+    title: "Lunch that isn't a lottery",
+    body: "A published weekly menu, a real allergy list, and a price that doesn't creep up every semester.",
+  },
+  {
+    n: "02",
+    title: "Clubs get a real budget",
+    body: "Funding decided by a student vote each term, not by whoever shows up to the loudest meeting.",
+  },
+  {
+    n: "03",
+    title: "A printer that works",
+    body: "Two working printers per hallway, tracked and reported weekly. Not a joke, an actual line item.",
+  },
+  {
+    n: "04",
+    title: "Office hours you can find",
+    body: "One shared calendar for every student rep, so you know exactly when someone's around to help.",
+  },
+];
+
+const stats = [
+  { value: 1240, label: "students represented" },
+  { value: 37, label: "hallway meetings held" },
+  { value: 9, label: "clubs consulted directly" },
+  { value: 100, label: "percent snack budget saved", suffix: "%" },
+];
+
+const timeline = [
+  { date: "Week 1", event: "Campaign kickoff — hallway listening tour begins" },
+  { date: "Week 2", event: "Platform published, first town hall" },
+  { date: "Week 3", event: "Debate night vs. other tickets" },
+  { date: "Week 4", event: "Voting opens" },
+];
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RUIZ FOR PRESIDENT — Student Council 2026</title>
+  <meta name="description" content="Amara Ruiz for Student Council President. A platform built from actual hallway conversations." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400..700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="grain"></div>
+
+  <header id="nav">
+    <div class="nav-inner">
+      <a href="#top" class="nav-mark">Aarush<span>'26</span></a>
+      <nav class="nav-links">
+        <a href="#platform">Platform</a>
+        <a href="#numbers">Numbers</a>
+        <a href="#timeline">Timeline</a>
+        <a href="#vote" class="nav-cta">Vote Aarush</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="hero-eyebrow">Vote Aarush Anumukonda for President · 2026</p>
+          <h1 class="hero-title">
+            <span class="line" data-speed="0.2">Actually</span>
+            <span class="line accent" data-speed="0.35">listen.</span>
+            <span class="line" data-speed="0.5">Actually</span>
+            <span class="line accent2" data-speed="0.65">fix it.</span>
+          </h1>
+          <p class="hero-sub">
+            
+            Here's what four hundred conversations turned into.
+          </p>
+          <div class="hero-actions">
+            <a href="#vote" class="btn-magnetic">
+              <span>Vote Ruiz on the 24th</span>
+            </a>
+            <a href="#platform" class="btn-ghost">See the platform ↓</a>
+          </div>
+        </div>
+        <div class="hero-portrait">
+          <div class="portrait-frame">
+            <img src="/images/candidate.jpg" alt="Amara Ruiz" />
+          </div>
+          <div class="portrait-tag">№ 24 on the ballot</div>
+        </div>
+      </div>
+      <div class="hero-marquee">
+        <div class="marquee-track">
+          <span>HALLWAYS OVER HANDOUTS &nbsp;·&nbsp; </span>
+          <span>REAL BUDGETS, REAL VOTES &nbsp;·&nbsp; </span>
+          <span>PRINTERS THAT PRINT &nbsp;·&nbsp; </span>
+          <span>HALLWAYS OVER HANDOUTS &nbsp;·&nbsp; </span>
+          <span>REAL BUDGETS, REAL VOTES &nbsp;·&nbsp; </span>
+          <span>PRINTERS THAT PRINT &nbsp;·&nbsp; </span>
+        </div>
+      </div>
+    </section>
+
+    <section id="platform" class="platform">
+      <div class="section-head">
+        <h2>The platform</h2>
+        <p>Four things, chosen because they came up over and over — not because they sound good on a poster.</p>
+      </div>
+      <div class="platform-list">
+        {platform.map((item) => (
+          <div class="platform-item reveal">
+            <span class="platform-num">{item.n}</span>
+            <div class="platform-body">
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section id="numbers" class="numbers">
+      <div class="section-head light">
+        <h2>Where the platform came from</h2>
+        <p>Every line above traces back to a real conversation. Here's the count.</p>
+      </div>
+      <div class="stat-grid">
+        {stats.map((s) => (
+          <div class="stat reveal">
+            <span class="stat-value" data-count={s.value} data-suffix={s.suffix || ""}>0</span>
+            <span class="stat-label">{s.label}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section id="timeline" class="timeline">
+      <div class="section-head">
+        <h2>Four weeks, in order</h2>
+        <p>Nothing hidden — here's exactly what happens between now and the vote.</p>
+      </div>
+      <div class="timeline-track">
+        {timeline.map((t, i) => (
+          <div class="timeline-item reveal">
+            <span class="timeline-dot"></span>
+            <span class="timeline-date">{t.date}</span>
+            <span class="timeline-event">{t.event}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section id="vote" class="cta-section">
+      <h2 class="cta-title">
+        Ballots open the 24th.<br/>
+        <span class="accent">Bring a friend.</span>
+      </h2>
+      <p class="cta-sub">Voting happens in homeroom — ask your teacher if you missed the form.</p>
+      <a href="#top" class="btn-magnetic big">
+        <span>Back to top ↑</span>
+      </a>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Paid for by the Ruiz for President campaign committee. Class of 2026.</p>
+  </footer>
+
+  <style>
+    :root{
+      --ink:#14131A;
+      --ink-soft:#1D1B26;
+      --coral:#FF4B3E;
+      --gold:#FFC53D;
+      --violet:#6C5CE7;
+      --paper:#F5F3EE;
+      --paper-dim:#C9C6BE;
+      --font-display:'Space Grotesk', sans-serif;
+      --font-body:'Inter', sans-serif;
+    }
+
+    *{box-sizing:border-box; margin:0; padding:0;}
+
+    html{scroll-behavior:smooth;}
+
+    body{
+      background:var(--paper);
+      color:var(--ink);
+      font-family:var(--font-body);
+      overflow-x:hidden;
+    }
+
+    .grain{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:999;
+      opacity:0.035;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      mix-blend-mode:overlay;
+    }
+
+    a{color:inherit; text-decoration:none;}
+
+    /* Nav */
+    #nav{
+      position:fixed;
+      top:0; left:0; right:0;
+      z-index:100;
+      padding:22px 5vw;
+      transition:padding .3s ease, background .3s ease, backdrop-filter .3s ease;
+    }
+    #nav.scrolled{
+      padding:12px 5vw;
+      background:rgba(245,243,238,0.85);
+      backdrop-filter:blur(10px);
+      box-shadow:0 1px 0 rgba(20,19,26,0.08);
+    }
+    .nav-inner{
+      max-width:1400px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .nav-mark{
+      font-family:var(--font-display);
+      font-weight:700;
+      font-size:20px;
+      letter-spacing:-0.02em;
+    }
+    .nav-mark span{color:var(--coral);}
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:32px;
+      font-size:14px;
+      font-weight:500;
+    }
+    .nav-links a:not(.nav-cta){
+      position:relative;
+      padding-bottom:2px;
+    }
+    .nav-links a:not(.nav-cta)::after{
+      content:'';
+      position:absolute;
+      left:0; bottom:0;
+      width:0%; height:1px;
+      background:var(--ink);
+      transition:width .25s ease;
+    }
+    .nav-links a:not(.nav-cta):hover::after{width:100%;}
+    .nav-cta{
+      background:var(--ink);
+      color:var(--paper);
+      padding:9px 18px;
+      border-radius:100px;
+      transition:background .2s ease, transform .2s ease;
+    }
+    .nav-cta:hover{background:var(--coral); transform:translateY(-1px);}
+
+    /* Hero */
+    .hero{
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      padding:120px 5vw 60px;
+      position:relative;
+    }
+    .hero-grid{
+      max-width:1400px;
+      margin:0 auto;
+      width:100%;
+      display:grid;
+      grid-template-columns:1.3fr 1fr;
+      gap:6vw;
+      align-items:center;
+    }
+    .hero-eyebrow{
+      font-size:13px;
+      font-weight:600;
+      letter-spacing:0.04em;
+      color:var(--coral);
+      margin-bottom:18px;
+    }
+    .hero-title{
+      font-family:var(--font-display);
+      font-size:clamp(48px, 8vw, 108px);
+      line-height:0.94;
+      font-weight:700;
+      letter-spacing:-0.03em;
+    }
+    .hero-title .line{
+      display:block;
+    }
+    .hero-title .accent{color:var(--coral);}
+    .hero-title .accent2{color:var(--violet);}
+    .hero-sub{
+      font-size:18px;
+      line-height:1.6;
+      color:#4a4842;
+      max-width:46ch;
+      margin:28px 0 36px;
+    }
+    .hero-actions{
+      display:flex;
+      align-items:center;
+      gap:28px;
+      flex-wrap:wrap;
+    }
+
+    .btn-magnetic{
+      position:relative;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      background:var(--coral);
+      color:var(--paper);
+      font-weight:600;
+      font-size:15px;
+      padding:16px 30px;
+      border-radius:100px;
+      transition:transform .15s ease, box-shadow .15s ease;
+      box-shadow:0 0 0 0 rgba(255,75,62,0.4);
+    }
+    .btn-magnetic:hover{
+      box-shadow:0 8px 24px rgba(255,75,62,0.35);
+    }
+    .btn-magnetic.big{
+      font-size:17px;
+      padding:20px 40px;
+    }
+    .btn-ghost{
+      font-weight:600;
+      font-size:15px;
+      border-bottom:1px solid var(--ink);
+      padding-bottom:3px;
+      transition:opacity .2s ease;
+    }
+    .btn-ghost:hover{opacity:0.6;}
+
+    .hero-portrait{
+      position:relative;
+      justify-self:center;
+    }
+    .portrait-frame{
+      width:min(340px, 80vw);
+      aspect-ratio:9/11;
+      border-radius:24px;
+      overflow:hidden;
+      border:3px solid var(--ink);
+      box-shadow:14px 14px 0 var(--gold);
+      transform:rotate(2deg);
+      transition:transform .4s ease;
+    }
+    .portrait-frame:hover{transform:rotate(0deg) scale(1.02);}
+    .portrait-frame img{
+      width:100%; height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .portrait-tag{
+      position:absolute;
+      bottom:-18px;
+      left:-18px;
+      background:var(--ink);
+      color:var(--paper);
+      font-family:var(--font-display);
+      font-size:13px;
+      font-weight:600;
+      padding:10px 16px;
+      border-radius:100px;
+      transform:rotate(-3deg);
+    }
+
+    /* Marquee */
+    .hero-marquee{
+      margin-top:80px;
+      overflow:hidden;
+      border-top:1px solid rgba(20,19,26,0.12);
+      border-bottom:1px solid rgba(20,19,26,0.12);
+      padding:16px 0;
+    }
+    .marquee-track{
+      display:flex;
+      white-space:nowrap;
+      font-family:var(--font-display);
+      font-weight:700;
+      font-size:15px;
+      letter-spacing:0.02em;
+      color:var(--ink);
+      opacity:0.55;
+      animation:scroll-left 22s linear infinite;
+      width:max-content;
+    }
+    @keyframes scroll-left{
+      from{transform:translateX(0);}
+      to{transform:translateX(-50%);}
+    }
+
+    /* Section shared */
+    .section-head{
+      max-width:640px;
+      margin:0 auto 64px;
+      text-align:center;
+    }
+    .section-head h2{
+      font-family:var(--font-display);
+      font-size:clamp(32px, 4.5vw, 52px);
+      font-weight:700;
+      letter-spacing:-0.02em;
+      margin-bottom:16px;
+    }
+    .section-head p{
+      font-size:16px;
+      color:#4a4842;
+      line-height:1.6;
+    }
+    .section-head.light h2, .section-head.light p{color:var(--paper);}
+    .section-head.light p{opacity:0.7;}
+
+    /* Platform */
+    .platform{
+      padding:120px 5vw;
+      max-width:1000px;
+      margin:0 auto;
+    }
+    .platform-list{
+      display:flex;
+      flex-direction:column;
+    }
+    .platform-item{
+      display:grid;
+      grid-template-columns:80px 1fr;
+      gap:32px;
+      padding:36px 0;
+      border-top:1px solid rgba(20,19,26,0.12);
+      opacity:0;
+      transform:translateY(24px);
+      transition:opacity .6s ease, transform .6s ease;
+    }
+    .platform-item:last-child{border-bottom:1px solid rgba(20,19,26,0.12);}
+    .platform-item.in-view{opacity:1; transform:translateY(0);}
+    .platform-num{
+      font-family:var(--font-display);
+      font-size:15px;
+      font-weight:700;
+      color:var(--coral);
+      padding-top:6px;
+    }
+    .platform-body h3{
+      font-family:var(--font-display);
+      font-size:clamp(22px, 3vw, 30px);
+      font-weight:700;
+      margin-bottom:10px;
+      letter-spacing:-0.01em;
+    }
+    .platform-body p{
+      font-size:16px;
+      line-height:1.6;
+      color:#4a4842;
+      max-width:52ch;
+    }
+
+    /* Numbers */
+    .numbers{
+      background:var(--ink);
+      padding:120px 5vw;
+    }
+    .stat-grid{
+      max-width:1100px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:repeat(4, 1fr);
+      gap:40px;
+    }
+    .stat{
+      text-align:center;
+      opacity:0;
+      transform:translateY(20px);
+      transition:opacity .6s ease, transform .6s ease;
+    }
+    .stat.in-view{opacity:1; transform:translateY(0);}
+    .stat-value{
+      display:block;
+      font-family:var(--font-display);
+      font-size:clamp(40px, 5vw, 64px);
+      font-weight:700;
+      color:var(--gold);
+      letter-spacing:-0.02em;
+    }
+    .stat-label{
+      display:block;
+      font-size:13px;
+      color:var(--paper-dim);
+      margin-top:8px;
+      line-height:1.4;
+    }
+
+    /* Timeline */
+    .timeline{
+      padding:120px 5vw;
+      max-width:800px;
+      margin:0 auto;
+    }
+    .timeline-track{
+      display:flex;
+      flex-direction:column;
+      gap:0;
+    }
+    .timeline-item{
+      display:grid;
+      grid-template-columns:16px 100px 1fr;
+      align-items:center;
+      gap:24px;
+      padding:24px 0;
+      border-bottom:1px solid rgba(20,19,26,0.1);
+      opacity:0;
+      transform:translateX(-16px);
+      transition:opacity .5s ease, transform .5s ease;
+    }
+    .timeline-item.in-view{opacity:1; transform:translateX(0);}
+    .timeline-dot{
+      width:10px; height:10px;
+      border-radius:50%;
+      background:var(--violet);
+    }
+    .timeline-date{
+      font-family:var(--font-display);
+      font-weight:700;
+      font-size:14px;
+      color:var(--coral);
+    }
+    .timeline-event{
+      font-size:16px;
+      color:#2a2822;
+    }
+
+    /* CTA */
+    .cta-section{
+      padding:160px 5vw;
+      text-align:center;
+      background:linear-gradient(180deg, var(--paper) 0%, #EFE9DC 100%);
+    }
+    .cta-title{
+      font-family:var(--font-display);
+      font-size:clamp(36px, 6vw, 72px);
+      font-weight:700;
+      letter-spacing:-0.02em;
+      line-height:1.08;
+      margin-bottom:20px;
+    }
+    .cta-title .accent{color:var(--coral);}
+    .cta-sub{
+      font-size:16px;
+      color:#4a4842;
+      margin-bottom:40px;
+    }
+
+    footer{
+      padding:32px 5vw;
+      text-align:center;
+      font-size:12px;
+      color:var(--paper-dim);
+      background:var(--ink);
+    }
+
+    @media (max-width:860px){
+      .hero-grid{grid-template-columns:1fr; gap:56px;}
+      .hero-portrait{justify-self:start;}
+      .nav-links{gap:18px; font-size:13px;}
+      .stat-grid{grid-template-columns:repeat(2, 1fr); gap:32px;}
+      .platform-item{grid-template-columns:1fr; gap:10px;}
+      .timeline-item{grid-template-columns:12px 80px 1fr; gap:14px;}
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      html{scroll-behavior:auto;}
+      .marquee-track{animation:none;}
+      .platform-item, .stat, .timeline-item{
+        opacity:1 !important;
+        transform:none !important;
+        transition:none !important;
+      }
+    }
+  </style>
+
+  <script>
+    // Nav shrink on scroll
+    const nav = document.getElementById('nav');
+    const onScroll = () => {
+      if(window.scrollY > 40){ nav?.classList.add('scrolled'); }
+      else{ nav?.classList.remove('scrolled'); }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Reveal-on-scroll for platform items, stats, timeline
+    const revealTargets = document.querySelectorAll('.platform-item, .stat, .timeline-item');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+        }
+      });
+    }, { threshold: 0.2 });
+    revealTargets.forEach((el) => io.observe(el));
+
+    // Animated stat counters — trigger once when in view
+    const counters = document.querySelectorAll('.stat-value');
+    const counted = new WeakSet();
+    const countIo = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if(entry.isIntersecting && !counted.has(entry.target)){
+          counted.add(entry.target);
+          const el = entry.target as HTMLElement;
+          const target = parseInt(el.dataset.count || '0', 10);
+          const suffix = el.dataset.suffix || '';
+          const duration = 1400;
+          const start = performance.now();
+          function tick(now: number){
+            const p = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = Math.round(eased * target).toString() + suffix;
+            if(p < 1) requestAnimationFrame(tick);
+          }
+          requestAnimationFrame(tick);
+        }
+      });
+    }, { threshold: 0.4 });
+    counters.forEach((el) => countIo.observe(el));
+
+    // Subtle parallax on hero title lines
+    const heroLines = document.querySelectorAll<HTMLElement>('.hero-title .line');
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      heroLines.forEach((line) => {
+        const speed = parseFloat(line.dataset.speed || '0.3');
+        line.style.transform = `translateY(${y * speed * 0.08}px)`;
+      });
+    }, { passive: true });
+
+    // Magnetic button effect
+    document.querySelectorAll<HTMLElement>('.btn-magnetic').forEach((btn) => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        btn.style.transform = `translate(${x * 0.2}px, ${y * 0.3}px)`;
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = 'translate(0,0)';
+      });
+    });
+  </script>
+
+</body>
+</html>
